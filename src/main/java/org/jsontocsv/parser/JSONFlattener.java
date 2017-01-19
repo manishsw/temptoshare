@@ -19,11 +19,7 @@ package org.jsontocsv.parser;
 import java.io.File;
 import java.io.IOException;
 import java.net.URI;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -45,6 +41,8 @@ public class JSONFlattener {
      * The class Logger
      */
     private static final Logger LOGGER = Logger.getLogger(JSONFlattener.class);
+
+   // private static Set<String> systemNumberset = new HashSet<String>;
 
     /**
      * Parse the JSON content at the given URI using the default
@@ -112,6 +110,8 @@ public class JSONFlattener {
         return flatJson;
     }
 
+
+
     /**
      * Parse the JSON String
      *
@@ -124,6 +124,7 @@ public class JSONFlattener {
 
         try {
             JSONObject jsonObject = new JSONObject(json);
+
             flatJson = new ArrayList<Map<String, String>>();
             flatJson.add(parse(jsonObject));
         } catch (JSONException je) {

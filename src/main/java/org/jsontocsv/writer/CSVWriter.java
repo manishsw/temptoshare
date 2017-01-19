@@ -69,6 +69,38 @@ public class CSVWriter {
         return csvString;
     }
 
+
+    /**
+     * Convert the given List of String keys-values as a CSV String.
+     *
+     * @param flatJson   The List of key-value pairs generated from the JSON String
+     * @param separator  The separator can be: ',', ';' or '\t'
+     *
+     * @return The generated CSV string
+     */
+    public static String getCSV(List<Map<String, String>> flatJson, String separator, Set<String> headers,boolean filterHeader ) {
+      //  Set<String> headers = collectHeaders(flatJson);
+        String csvString = "";
+        if(!filterHeader) {
+             csvString = StringUtils.join(headers.toArray(), separator) + "\n";
+        }
+
+        for (Map<String, String> map : flatJson) {
+
+            csvString = csvString + getSeperatedColumns(headers, map, separator) + "\n";
+
+        }
+
+        return csvString;
+    }
+
+
+    public static Set<String> getCSVHeaders(List<Map<String, String>> flatJson, String separator) {
+        Set<String> headers = collectHeaders(flatJson);
+
+        return headers;
+    }
+
     /**
      * Write the given CSV string to the given file.
      *
@@ -77,7 +109,7 @@ public class CSVWriter {
      */
     public static void writeToFile(String csvString, String fileName) {
         try {
-            FileUtils.write(new File(fileName), csvString);
+            FileUtils.write(new File(fileName), csvString, true);
         } catch (IOException e) {
             LOGGER.error("CSVWriter#writeToFile(csvString, fileName) IOException: ", e);
         }
